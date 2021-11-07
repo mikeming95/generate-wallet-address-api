@@ -1,4 +1,4 @@
-import { IsString, MinLength, IsArray, ArrayMinSize, minLength } from 'class-validator';
+import { IsString, MinLength, IsArray, ArrayMinSize } from 'class-validator';
 
 export class GenerateSegWitAddressDto {
     /**

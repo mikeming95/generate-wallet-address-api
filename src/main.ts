@@ -2,10 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'modules/app';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
+import { join } from 'path';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common'
-//import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(
@@ -13,19 +13,13 @@ async function bootstrap(): Promise<void> {
     new ExpressAdapter(),
     { cors: true },
   );
-  // const options = new DocumentBuilder()
-  //       .setTitle('Wallet address generate API')
-  //       .setDescription('API for generating wallet address')
-  //       .setVersion('1.0.0')
-  //       .addTag('address')
-  //       .build();
-  // const document = SwaggerModule.createDocument(app, options);
-  // SwaggerModule.setup('api-docs', app, document);
 
   app.enable('trust proxy');
   app.use(helmet());
   app.use(compression());
-
+  app.useStaticAssets(join(__dirname, '..', 'src/static'));
+  app.setBaseViewsDir(join(__dirname, '..', 'src/views'));
+  app.setViewEngine('hbs');
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

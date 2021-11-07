@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mike">
+    <title>Demo</title>
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jquery -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- jsencrypt -->
+    <script src="/js/jsencrypt.min.js"></script>
+    <!-- generate -->
+    <script src="/js/generate.js"></script>
+  </head>
+  <body>
+    <div>
+        <div class="container">
+            <h1 class="text-center">API Test</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Generate HD SegWit bitcoin address</h3>
+                    <div class="form-horizontal" >
+                        <div class="form-group">
+                            <label for="mnemonic" class="col-sm-1 control-label">Mnemonic</label>
+                            <div class="col-sm-11">
+                                <input id="mnemonic" type="text" class="form-control" value="junior keep day sentence defense crawl rabbit front evoke hobby awake fade">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="path" class="col-sm-1 control-label">Path</label>
+                            <div class="col-sm-11">
+                                <input id="path" type="text" class="form-control" value="m/49'/0'/0'/1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <button id="generate-segwit-btn" class="btn generate"><b>GENERATE</b></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="segwit-address" class="col-sm-1 control-label">Address</label>
+                            <div class="col-sm-11">
+                                <input id="segwit-address" type="text" class="path form-control" value="" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+             <hr>
+             <div class="row">
+                <div class="col-md-12">
+                    <h3>Generate multi-sig bitcoin address</h3>
+                    <div class="form-horizontal" >
+                        <div class="form-group">
+                            <label for="m" class="col-sm-1 control-label">m</label>
+                            <div class="col-sm-11">
+                                <input id="m" min=1 type="number" class="form-control" value=1>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="n"  class="col-sm-1 control-label">n</label>
+                            <div class="col-sm-11">
+                                <input id="n" type="number" min=1 class="form-control" value=1>
+                            </div>
+                        </div>
+                        <div id="addresses-list">
+                            <div id="address1-form" class="form-group">
+                                <label for="address1" class="col-sm-1 control-label">Address1</label>
+                                <div class="col-sm-11">
+                                    <input id="address1" type="text" class="form-control" value="02799dc04a8acf04e793ff0f2c35c21c0388529eb964c565a455f13c07123c9ea2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <button id="generate-multi-sig-btn" class="btn generate"><b>GENERATE</b></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multi-sig-address" class="col-sm-1 control-label">Address</label>
+                            <div class="col-sm-11">
+                                <input id="multi-sig-address" type="text" class="path form-control" value="" readonly="readonly">
+                            </div>
+                        </div>
+                        <br /><br /><br /><br />
+
+                    </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+        
+  </body>
+</html>

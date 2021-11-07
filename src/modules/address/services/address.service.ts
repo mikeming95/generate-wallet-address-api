@@ -1,10 +1,10 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { GenerateSegWitAddressDto, GenerateMultiSigAddressDto, AddressDto } from 'modules/address/dtos'
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { GenerateMultiSigAddressDto, AddressDto, RsaDataDto } from 'modules/address/dtos'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as bip32 from 'bip32';
 import * as bip39 from 'bip39';
-import { MnemonicInvaildException, PathInvaildException, MNInvalidException, NNotEqualToKeys} from 'exceptions'
-import { ValidatorService } from 'utils/validator.service';
+import { MnemonicInvaildException, PathInvaildException, MNInvalidException, NNotEqualToKeys, AddressInvalidException} from 'exceptions'
+import { ValidatorService , CryptoService } from 'utils';
 
 @Injectable()
 export class AddressService {
@@ -16,13 +16,21 @@ export class AddressService {
      * @throws  {PathInvaildException} path is invalid
      */
     public async generateSegWitAddress(
-       GenerateSegWitAddressDto: GenerateSegWitAddressDto,
-    ):Promise<AddressDto>{
-        const{ seed, path } = GenerateSegWitAddressDto
-        const mnemonic = seed.join(" ");
+        RsaDataDto: RsaDataDto,
+     ):Promise<AddressDto>{
+        const{ data } = RsaDataDto
+        const jsonText = CryptoService.RsaDecrypt(data)
+        //can not decrypt
+        if (!jsonText){
+            throw new ForbiddenException()
+        }
+        const responseJson = JSON.parse(jsonText);
+        const { mnemonic, path } = responseJson
+        //invalid mnemonic
         if (ValidatorService.isInvaildMnemonic(mnemonic)){
             throw new MnemonicInvaildException();
         }
+        //invalid path
         if (ValidatorService.isInvaildPath(path)){
             throw new PathInvaildException();
         }
@@ -33,33 +41,45 @@ export class AddressService {
             pubkey: bip32Interface.publicKey,
         })
         return new AddressDto(address)
-    }
+     }
 
 
     /**
      * Generate multi-sig address
-     * @param   {GenerateMultiSigAddressDto} GenerateMultiSigAddressDto
+     * @param   {RsaDataDto} RsaDataDto
      * @returns {AddressDto} address:string
      * @throws {MNInvalidException} m < n 
      * @throws {NNotEqualToKeys} n != keys.length
      */
     public async generateMultiSigAddress(
-        GenerateMultiSigAddressDto: GenerateMultiSigAddressDto,
+        RsaDataDto: RsaDataDto,
     ):Promise<AddressDto>{
-        const{ keys, m , n } = GenerateMultiSigAddressDto
-        if (m > n){
+        const { data } = RsaDataDto;
+        const jsonText = CryptoService.RsaDecrypt(data);
+        //can not decrypt
+        if (!jsonText){
+            throw new ForbiddenException();
+        }
+        const responseJson = JSON.parse(jsonText);
+        const {addresses, m , n  } = responseJson;
+        if ((typeof(m) !== "number")||(typeof(n) !== "number")||(m > n)){
             throw new MNInvalidException();
         }
-        if (n !== keys.length){
+        if (n !== addresses.length){
             throw new NNotEqualToKeys();
         }
-
-        let pubkeys: Buffer[] = keys
-        .filter(pk => pk.length > 0)
-        .map(hex => Buffer.from(hex, 'hex'));
-        const { address } = bitcoin.payments.p2sh({
-            redeem: bitcoin.payments.p2ms({ m, pubkeys }),
-        })
-        return new AddressDto(address)
+        try{
+            let pubkeys: Buffer[] = addresses
+            .filter(pk => pk.length > 0)
+            .map(hex => Buffer.from(hex, 'hex'));
+            const { address } = bitcoin.payments.p2sh({
+                redeem: bitcoin.payments.p2ms({ m, pubkeys }),
+            })
+            return new AddressDto(address);
+        }catch{
+            throw new AddressInvalidException();
+        }
+        
+        
     }
 }

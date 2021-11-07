@@ -15,5 +15,5 @@ export class GenerateMultiSigAddressDto {
     readonly n?: number;
 
     @ArrayMinSize(1,{message:"The length of keys must be greater than 1"})
-    readonly keys?: string[];
+    readonly addresses?: string[];
   }
