@@ -6,19 +6,19 @@ API server allows generation of bitcoin address.The following operations are sup
 
 ## Backend technologies stack
 TypeScript, Node.js, Nest.js, RSA, REST API
-****
+
 ## Table of Contents
 - [1. Quick Guide](#guide)
   - [Installation](#installation)
   - [Running the app](#run)
   - [Test](#test)
-- [2. Introduction](#introduction)
+- [2. API Introduction](#introduction)
   - [RSA](#rsa)
   - [Generate SegWit address API](#seg-wit)
   - [Generate multi-sig address API](#multi-sig)
 - [3. API Test interface](#interface)
 - [3. Reference](#reference)
-****
+
 <a id="guide"></a>
 
 ## 1. Quick Guide
@@ -73,7 +73,7 @@ $ yarn test:cov
 ### 2.1 RSA
 [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) (Rivest–Shamir–Adleman) is a public-key cryptosystem that is widely used for secure data transmission.
 
-In order to prevent API data from being exposed during transmission. This API server uses the RSA to encrypt the API data
+In order to prevent API data from being exposed during transmission. This API server uses the RSA to encrypt the API data.
 
 <a id="seg-wit"></a>
 
