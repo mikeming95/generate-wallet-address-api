@@ -119,7 +119,7 @@ Encrypt data:
 |addresses| []string| address list |
 
 Example:
-*	Frontend encrypt data {"m":1, "n":1, addresses:["02799dc04a8acf04e793ff0f2c35c21c0388529eb964c565a455f13c07123c9ea2"]}  => get encrypt data : "GHuYkp5AcKC2olWxGaOsUcTrpPHBsTS51tMkfaXaWyGSaFezm5oZp1GKT4555t5"
+*	Frontend encrypt data {"m":1, "n":1, addresses:["02799dc04a8acf04e793ff0f2c35c21c0388529eb964c565a455f13c07123c9ea2"]}  => get encrypt data : "OhezuAuXH9/BFFJrnoQ57O2/NRRFmbeDVZB6ZKysI0Dr09jrA1qLvt8Lyv0fU5twO1tNUTeZSj+rOkOyFBr3UgOJZxNMVDEgKYWhfJIqCjAr3KSIli9V/iEBE9QhPfAQ5GcKI6/rgs2mPybYyBoW/1UhvQSSTtOAHVNV5pG2pBI="
 *	request body : {"data":"OhezuAuXH9/BFFJrnoQ57O2/NRRFmbeDVZB6ZKysI0Dr09jrA1qLvt8Lyv0fU5twO1tNUTeZSj+rOkOyFBr3UgOJZxNMVDEgKYWhfJIqCjAr3KSIli9V/iEBE9QhPfAQ5GcKI6/rgs2mPybYyBoW/1UhvQSSTtOAHVNV5pG2pBI="}
 *	response : {"address":"3JaRVih9yRUe1MP3t8NyBKH4JyLUnMVukC"}
 
