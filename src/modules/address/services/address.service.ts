@@ -1,17 +1,18 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { GenerateMultiSigAddressDto, AddressDto, RsaDataDto } from 'modules/address/dtos'
+import { AddressDto, RsaDataDto } from '../dtos'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as bip32 from 'bip32';
 import * as bip39 from 'bip39';
-import { MnemonicInvaildException, PathInvaildException, MNInvalidException, NNotEqualToKeys, AddressInvalidException} from 'exceptions'
-import { ValidatorService , CryptoService } from 'utils';
+import { MnemonicInvaildException, PathInvaildException, MNInvalidException, NNotEqualToKeys, AddressInvalidException} from '../../../exceptions'
+import { ValidatorService , CryptoService } from '../../../utils';
 
 @Injectable()
 export class AddressService {
     /**
      * Generate seg-wit address
-     * @param   {GenerateSegWitAddressDto} GenerateSegWitAddressDto  seed:string && path:string
+     * @param   {RsaDataDto} data:string 
      * @returns {AddressDto} address:string
+     * @throws  {ForbiddenException} can not decrypt data
      * @throws  {MnemonicInvaildException} mnemonic is invalid
      * @throws  {PathInvaildException} path is invalid
      */
@@ -46,10 +47,12 @@ export class AddressService {
 
     /**
      * Generate multi-sig address
-     * @param   {RsaDataDto} RsaDataDto
+     * @param   {RsaDataDto} data:string 
      * @returns {AddressDto} address:string
-     * @throws {MNInvalidException} m < n 
+     * @throws  {ForbiddenException} can not decrypt data
+     * @throws {MNInvalidException} m or n invalid
      * @throws {NNotEqualToKeys} n != keys.length
+     * @throws {AddressInvalidException} address invalid
      */
     public async generateMultiSigAddress(
         RsaDataDto: RsaDataDto,

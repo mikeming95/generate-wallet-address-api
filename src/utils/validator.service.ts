@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as bip39 from 'bip39';
 
-
 @Injectable()
 export class ValidatorService {
     /**
-     * isInvaildMnemonic
+     * Check if mnemonic is invaild
      * @param   {string} mnemonic  
      * @returns {boolean} 
      */
@@ -20,7 +19,7 @@ export class ValidatorService {
     }
 
     /**
-     * isInvaildPath
+     * Check if mnemonic is path
      * @param   {string} path  
      * @returns {boolean} 
      */
@@ -28,9 +27,10 @@ export class ValidatorService {
         if (typeof(path) !== "string"){
             return true
         }
-        if (path.length < 1){
+        if (path.length <= 1){
             return true
         }
+        //format m/*'/*'/*'/*
         let regexp = new RegExp(/^(m\/)?(\d+'?\/)*\d+'?$/);
         if (!regexp.test(path)){
             return true

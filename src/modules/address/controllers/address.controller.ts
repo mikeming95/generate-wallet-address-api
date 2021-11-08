@@ -1,7 +1,6 @@
-import { Controller, Post, Body ,Request } from '@nestjs/common';
-import { AddressService } from 'modules/address/services'
-import { GenerateSegWitAddressDto, GenerateMultiSigAddressDto, AddressDto, RsaDataDto } from 'modules/address/dtos'
-import { ValidatorService , CryptoService } from 'utils';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { AddressService } from '../services'
+import { AddressDto, RsaDataDto } from '../dtos'
 
 @Controller('api/v1/address')
 export class AddressController {
@@ -19,6 +18,7 @@ export class AddressController {
      * @returns {AddressDto}
      */
     @Post('/seg-wit')
+    @HttpCode(200)
     async generateSegWitAddress(
         @Body() RsaDataDto: RsaDataDto,
     ):Promise<AddressDto> {        
@@ -32,16 +32,11 @@ export class AddressController {
      * @returns {AddressDto}
      */
     @Post('/multi-sig')
+    @HttpCode(200)
     async generateMultiSigAddress(
         @Body() RsaDataDto: RsaDataDto,
     ):Promise<AddressDto> {
         return this._addressService.generateMultiSigAddress(RsaDataDto);
     }
-    // @Post('/multi-sig')
-    // async generateMultiSigAddress(
-    //     @Body() GenerateMultiSigAddressDto: GenerateMultiSigAddressDto,
-    // ):Promise<AddressDto> {
-    //     return this._addressService.generateMultiSigAddress(GenerateMultiSigAddressDto);
-    // }
 
 }

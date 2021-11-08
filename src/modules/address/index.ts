@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AddressController } from 'modules/address/controllers';
-import { AddressService } from 'modules/address/services'
+import { AddressController } from './controllers';
+import { AddressService } from './services'
 
 @Module({
   imports: [],

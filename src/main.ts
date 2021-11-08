@@ -13,7 +13,6 @@ async function bootstrap(): Promise<void> {
     new ExpressAdapter(),
     { cors: true },
   );
-
   app.enable('trust proxy');
   app.use(helmet());
   app.use(compression());

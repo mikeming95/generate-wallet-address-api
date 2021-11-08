@@ -1,6 +1,5 @@
 import * as nodeRSA from 'node-rsa';
 import * as fs from 'fs';
-import * as crypto from 'crypto';
 import { Injectable } from '@nestjs/common';
 const publiKey = fs.readFileSync(process.cwd()+"/src/keys/rsa_public_key.pem").toString('ascii')
 const privateKey = fs.readFileSync(process.cwd()+'/src/keys/rsa_private_key.pem').toString('ascii')
@@ -11,7 +10,7 @@ export class CryptoService {
     static rsaEncryptor = new nodeRSA(publiKey);
 
     /**
-     * Generate Rsa Decrypt 
+     * Generate Decrypt rsa data
      * @param   {string} data  
      * @returns {string} decryptData
      */
@@ -26,7 +25,7 @@ export class CryptoService {
     }
 
     /**
-     * Generate RsaEncrypt
+     * Generate Encrypt rsa data
      * @param   {string} data  
      * @returns {string} encryptData
      */
@@ -35,14 +34,5 @@ export class CryptoService {
         const encryptData = this.rsaEncryptor.encrypt(data,"base64");
         return encryptData
     }
-
-    /**
-     * return publiKey
-     * @returns {string} public key
-     */
-    static GetRsaPublicKey(): string {
-        return publiKey
-    }
-
 
 }
